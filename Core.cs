@@ -5,7 +5,7 @@ using Il2CppPhoton.Deterministic;
 using Il2Cpp;
 using HarmonyLib;
 
-[assembly: MelonInfo(typeof(ShrimpleWeaponCustomizer.Core), "ShrimpleWeaponCustomizer", "0.1.0", "blankochan")]
+[assembly: MelonInfo(typeof(ShrimpleWeaponCustomizer.Core), ShrimpleWeaponCustomizer.BuildInfo.Name, ShrimpleWeaponCustomizer.BuildInfo.Version, ShrimpleWeaponCustomizer.BuildInfo.Author)]
 [assembly: MelonGame("Videocult", "Airframe")]
 [assembly: MelonAdditionalDependencies("ShrimpleNetworkingAPI")]
 

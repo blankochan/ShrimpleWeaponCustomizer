@@ -19,16 +19,19 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
-      - name: Download Networking API
-        run: |
-          gh release download --repo blankochan/ShrimpleNetworkingAPI --pattern ShrimpleNetworkingAPI.dll
-          mv ShrimpleNetworkingAPI.dll lib/
       - name: Build Release
         uses: blankochan/ShrimpleBuilder/build@master
         with:
           configuration: "Release"
+          include_networking_api: true
+          download_url: ${{ secrets.REFERENCE_URL }}
+      - name: Build zip
+        run: |
+          mkdir Mods
+          mv .build/ShrimpleWeaponCustomizer.dll Mods
+          zip -r ShrimpleWeaponCustomizer.zip Mods UserLibs
       - name: Upload to release
         uses: softprops/action-gh-release@v3
         with:
-          files: .build/*.dll
+          files: ShrimpleWeaponCustomizer.zip
+          archive: true

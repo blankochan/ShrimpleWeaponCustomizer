@@ -2,20 +2,23 @@ name: Build on push
 on:
   push:
     paths:
-      - "src/**"
+      - "**/*.cs"
       - "*.csproj"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
       - name: Download Networking API
         run: |
           gh release download --repo blankochan/ShrimpleNetworkingAPI --pattern ShrimpleNetworkingAPI.dll
+          mkdir lib
           mv ShrimpleNetworkingAPI.dll lib/
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Build
         uses: blankochan/ShrimpleBuilder/build@master
         with:
           configuration: "Debug"
+          include_networking_api: true
           download_url: ${{ secrets.REFERENCE_URL }}

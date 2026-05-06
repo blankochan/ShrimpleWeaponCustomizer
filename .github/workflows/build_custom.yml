@@ -30,14 +30,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - name: Download Networking API
-        run: |
-          gh release download --repo blankochan/ShrimpleNetworkingAPI --pattern ShrimpleNetworkingAPI.dll
-          mv ShrimpleNetworkingAPI.dll lib/
       - name: Build
         uses: blankochan/ShrimpleBuilder/build@master
         with:
+          include_networking_api: true
           configuration: ${{inputs.configuration}}
           active_dependencies: ${{inputs.active_dependencies}}
           constants: ${{inputs.constants}}
