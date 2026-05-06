@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="$(ProjectDir)/lib/*.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="$(ProjectDir)/.ref/*.dll" Private="false" />
   </ItemGroup>
 
