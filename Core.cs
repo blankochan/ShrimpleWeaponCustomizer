@@ -5,7 +5,7 @@ using Il2CppPhoton.Deterministic;
 using Il2Cpp;
 using HarmonyLib;
 
-[assembly: MelonInfo(typeof(ShrimpleWeaponCustomizer.Core), "ShrimpleWeaponCustomizer", "0.0.3", "blankochan")]
+[assembly: MelonInfo(typeof(ShrimpleWeaponCustomizer.Core), "ShrimpleWeaponCustomizer", "0.1.0", "blankochan")]
 [assembly: MelonGame("Videocult", "Airframe")]
 [assembly: MelonAdditionalDependencies("ShrimpleNetworkingAPI")]
 
@@ -18,9 +18,9 @@ public class Core : MelonMod
     public static string LocalStatsPath = $"{MelonLoader.Utils.MelonEnvironment.UserDataDirectory}/CustomizableWeapons.json";
     public override void OnLateInitializeMelon()
     {
-        if (!MelonMod.RegisteredMelons.Any(melon => melon.Info.Name == "ShrimpleNetworkingAPI" && melon.Info.Version == "0.1.0"))
+        if (!MelonMod.RegisteredMelons.Any(melon => melon.Info.Name == "ShrimpleNetworkingAPI"))
         {
-            this.Unregister("ShrimpleNetworkingAPI Is missing or has a mismatched version.");
+            this.Unregister("ShrimpleNetworkingAPI Is missing");
             return;
         }
         NetworkingMetadata = new()
