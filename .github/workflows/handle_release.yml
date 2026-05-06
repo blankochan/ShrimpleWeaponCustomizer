@@ -19,6 +19,11 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v6
+      - name: Download Networking API
+        run: |
+          gh release download --repo blankochan/ShrimpleNetworkingAPI --pattern ShrimpleNetworkingAPI.dll
+          mv ShrimpleNetworkingAPI.dll lib/
       - name: Build Release
         uses: blankochan/ShrimpleBuilder/build@master
         with:
