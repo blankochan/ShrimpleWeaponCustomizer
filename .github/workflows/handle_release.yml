@@ -1,10 +1,9 @@
 name: Handle Release
-on:
-  release:
-    types: [prereleased]
+on: release
 
 jobs:
   format:
+    if: contains(github.event.release.body,'autoRelease')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -15,6 +14,12 @@ jobs:
         with:
           tag: ${{ github.event.release.tag_name }}
   build_and_upload:
+    if: contains(github.event.release.body,'autoRelease')
+    strategy:
+      matrix:
+        target_beta:
+          - BETA_4
+          - BETA_5
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -24,14 +29,15 @@ jobs:
         with:
           configuration: "Release"
           include_networking_api: true
+          active_dependencies: ${{matrix.target_beta}}
+          constants: ${{matrix.target_beta}}
           download_url: ${{ secrets.REFERENCE_URL }}
       - name: Build zip
         run: |
           mkdir Mods
           mv .build/ShrimpleWeaponCustomizer.dll Mods
-          zip -r ShrimpleWeaponCustomizer.zip Mods UserLibs
+          zip -r ShrimpleWeaponCustomizer_${{matrix.target_beta}}.zip Mods UserLibs
       - name: Upload to release
         uses: softprops/action-gh-release@v3
         with:
-          files: ShrimpleWeaponCustomizer.zip
-          archive: true
+          files: ShrimpleWeaponCustomizer_${{matrix.target_beta}}.zip

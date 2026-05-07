@@ -7,11 +7,19 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        target_beta:
+          - BETA_4
+          - BETA_5
     runs-on: ubuntu-latest
     steps:
       - name: Build
         uses: blankochan/ShrimpleBuilder/build@master
         with:
-          configuration: "Debug"
+          rename: true
           include_networking_api: true
+          active_dependencies: ${{matrix.target_beta}}
+          constants: ${{matrix.target_beta}}
+          configuration: "Debug"
           download_url: ${{ secrets.REFERENCE_URL }}
